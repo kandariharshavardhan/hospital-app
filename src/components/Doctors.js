@@ -118,7 +118,7 @@ function Doctors() {
       <Drawer isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader>Add Doctor Details</DrawerHeader>
+          <DrawerHeader>Add Doctors Details</DrawerHeader>
           <DrawerBody>
             <VStack spacing={4}>
               <FormLabel>Name</FormLabel>
