@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -15,6 +15,10 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerFooter,
+  Input,
+  Textarea,
+  FormControl,
+  FormLabel,
 } from '@chakra-ui/react';
 import patient from './pictures/patient.png';
 
@@ -23,6 +27,26 @@ function Patients() {
 
   const handleSubmit = () => {
     onOpen(); // Opens the modal
+  };
+  const [patientDetails, setPatientDetails] = useState({
+    patientName: "",
+    causeForCheckup: "",
+    joiningDate: "",
+    relievingDate: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPatientDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = () => {
+    console.log("Patient Details:", patientDetails);
+    // Add logic to save details to the database
+    onClose(); // Close the drawer after saving
   };
 
   return (
@@ -44,15 +68,56 @@ function Patients() {
       <Drawer isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader>Add Patients Details</DrawerHeader>
+          <DrawerHeader>Add Patient Details</DrawerHeader>
           <DrawerBody>
-            <p>Form to add Patients details goes here.</p>
+            <FormControl mb={4}>
+              <FormLabel>Patient Name</FormLabel>
+              <Input
+                type="text"
+                name="patientName"
+                placeholder="Enter patient name"
+                value={patientDetails.patientName}
+                onChange={handleChange}
+              />
+            </FormControl>
+  
+            <FormControl mb={4}>
+              <FormLabel>Cause for Checkup</FormLabel>
+              <Textarea
+                name="causeForCheckup"
+                placeholder="Enter the reason for the checkup"
+                value={patientDetails.causeForCheckup}
+                onChange={handleChange}
+              />
+            </FormControl>
+  
+            <FormControl mb={4}>
+              <FormLabel>Previous Patient Time of Joining</FormLabel>
+              <Input
+                type="datetime-local"
+                name="joiningDate"
+                value={patientDetails.joiningDate}
+                onChange={handleChange}
+              />
+            </FormControl>
+  
+            <FormControl mb={4}>
+              <FormLabel>Relieving Date</FormLabel>
+              <Input
+                type="datetime-local"
+                name="relievingDate"
+                value={patientDetails.relievingDate}
+                onChange={handleChange}
+              />
+            </FormControl>
           </DrawerBody>
           <DrawerFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Save</Button>
+            <Button variant="ghost" onClick={handleSave}>
+              Save
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
